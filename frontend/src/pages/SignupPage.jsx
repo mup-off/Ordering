@@ -206,9 +206,9 @@ export const SignupPage = ({ onSignup, onNavigateToLogin, onHome }) => {
 
         .signup-form-side {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
-          padding: 4rem;
+          padding: 4rem 2rem;
           background: var(--surface);
           overflow-y: auto;
         }
@@ -217,6 +217,7 @@ export const SignupPage = ({ onSignup, onNavigateToLogin, onHome }) => {
           width: 100%;
           max-width: 450px;
           position: relative;
+          margin: auto 0;
         }
 
         .back-home-btn {

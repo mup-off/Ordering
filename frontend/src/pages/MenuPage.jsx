@@ -9,7 +9,10 @@ export const MenuPage = ({ onAddToCart }) => {
     { id: 3, name: 'Creamy Pasta', price: 14.50, category: 'Pasta', description: 'Hand-made pasta with white sauce.', image: '/images/pasta.png' },
     { id: 4, name: 'Fresh Sushi', price: 22.00, category: 'Sushi', description: 'Premium selection of fresh fish.', image: '/images/sushi.png' }
   ])
+  const [activeCategory, setActiveCategory] = useState('All')
   const [loading, setLoading] = useState(false)
+  const categories = ['All', 'Burgers', 'Pizza', 'Pasta', 'Sushi']
+
 
   const filteredMeals = activeCategory === 'All'
     ? meals

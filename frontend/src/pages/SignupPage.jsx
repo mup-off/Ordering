@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { User, Mail, Lock, Phone, ArrowRight, Github, X } from 'lucide-react'
+import { User, Mail, Lock, Phone, ArrowRight, Github, ArrowLeft } from 'lucide-react'
 
 import { authApi } from '../api'
 
@@ -54,8 +54,9 @@ export const SignupPage = ({ onSignup, onNavigateToLogin, onHome }) => {
 
         <div className="signup-form-side">
           <div className="form-container">
-            <button className="close-btn" onClick={onHome} aria-label="Close">
-              <X size={24} />
+            <button className="back-home-btn" onClick={onHome} aria-label="Back to Home">
+              <ArrowLeft size={18} />
+              <span>Back to Home</span>
             </button>
             <div className="signup-header">
               <h2>Create New Account</h2>
@@ -218,22 +219,26 @@ export const SignupPage = ({ onSignup, onNavigateToLogin, onHome }) => {
           position: relative;
         }
 
-        .close-btn {
+        .back-home-btn {
           position: absolute;
-          top: -2rem;
-          right: -1rem;
-          background: none;
+          top: -2.5rem;
+          left: 0;
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(10px);
           color: var(--text-muted);
-          border-radius: 50%;
-          padding: 8px;
+          font-weight: 600;
           display: flex;
           align-items: center;
-          justify-content: center;
+          gap: 0.5rem;
+          padding: 8px 12px;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          border: 1px solid var(--border);
         }
 
-        .close-btn:hover {
+        .back-home-btn:hover {
           background: white;
-          color: var(--text);
+          color: var(--primary);
         }
 
         .signup-header {

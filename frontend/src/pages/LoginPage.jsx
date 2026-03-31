@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Github, X } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Github, ArrowLeft } from 'lucide-react'
 
 import { authApi } from '../api'
 
@@ -29,8 +29,9 @@ export const LoginPage = ({ onLogin, onNavigateToSignup, onHome }) => {
 
       <div className="login-card-container">
         <div className="login-card card glass">
-          <button className="close-btn" onClick={onHome} aria-label="Close">
-            <X size={24} />
+          <button className="back-home-btn" onClick={onHome} aria-label="Back to Home">
+            <ArrowLeft size={18} />
+            <span>Back to Home</span>
           </button>
           <div className="login-header">
             <h2>Welcome Back</h2>
@@ -120,6 +121,13 @@ export const LoginPage = ({ onLogin, onNavigateToSignup, onHome }) => {
   align-items: center;
   justify-content: center;
   z-index: 3000;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .login-page {
+    align-items: flex-start;
+  }
 }
 
         .login-background {
@@ -129,6 +137,7 @@ export const LoginPage = ({ onLogin, onNavigateToSignup, onHome }) => {
   background-size: cover;
   background-position: center;
   filter: brightness(0.7) blur(5px);
+  z-index: 1;
 }
 
         .login-card-container {
@@ -136,10 +145,11 @@ export const LoginPage = ({ onLogin, onNavigateToSignup, onHome }) => {
   z-index: 10;
   width: 100%;
   max-width: 450px;
-  padding: 2rem;
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: auto 0;
 }
 
         .login-card {
@@ -150,22 +160,24 @@ export const LoginPage = ({ onLogin, onNavigateToSignup, onHome }) => {
   position: relative;
 }
 
-        .close-btn {
+        .back-home-btn {
   position: absolute;
-  top: 1rem;
-  right: 1.5rem;
+  top: 1.5rem;
+  left: 1.5rem;
   background: none;
   color: var(--text-muted);
-  border-radius: 50%;
-  padding: 8px;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-        .close-btn:hover {
+        .back-home-btn:hover {
   background: var(--surface);
-  color: var(--text);
+  color: var(--primary);
 }
 
         .login-header {

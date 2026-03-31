@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 
-def api_root(request):
-    return JsonResponse({"message": "Welcome to the Food Ordering API!"})
+def redirect_to_frontend(request):
+    return HttpResponseRedirect('http://localhost:5173/')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('', api_root, name='home'),
+    path('', redirect_to_frontend, name='home'),
 ]

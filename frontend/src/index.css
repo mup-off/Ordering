@@ -1,0 +1,112 @@
+:root {
+  --primary: #ff4d00;
+  --primary-hover: #e64500;
+  --secondary: #ff8c00;
+  --accent: #ffcc00;
+  --background: #ffffff;
+  --surface: #f8f9fa;
+  --text: #1a1a1a;
+  --text-muted: #666666;
+  --error: #ff3333;
+  --success: #28a745;
+  --border: #eeeeee;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --glass: rgba(255, 255, 255, 0.7);
+  --radius: 12px;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+[data-theme='dark'] {
+  --background: #121212;
+  --surface: #1e1e1e;
+  --text: #f8f9fa;
+  --text-muted: #b0b0b0;
+  --border: #333333;
+  --glass: rgba(30, 30, 30, 0.7);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.5;
+  transition: background-color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+/* Auth Utilities */
+.error-message {
+  background: #fdf2f2;
+  color: #db2777;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid #f9a8d4;
+  text-align: center;
+}
+
+.loading-screen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(255, 77, 0, 0.3);
+}
+
+.card {
+  background: var(--background);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  border: 1px solid var(--border);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

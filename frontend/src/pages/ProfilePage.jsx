@@ -99,7 +99,10 @@ export const ProfilePage = ({ user, onLogout, onHome }) => {
                     {order.items && order.items.map((item, idx) => (
                       <div key={idx} className="order-item-row">
                         <span className="item-qty">{item.quantity}x</span>
-                        <span className="item-name">{item.meal_name || `Meal #${item.meal}`}</span>
+                        <span className="item-name">
+                          {item.meal?.name || item.meal_name || `Meal #${item.meal}`}
+                          {item.meal?.category?.name && <span className="item-category-tag"> ({item.meal.category.name})</span>}
+                        </span>
                         <span className="item-price">${(item.price * item.quantity).toFixed(2)}</span>
                       </div>
                     ))}
@@ -314,6 +317,13 @@ export const ProfilePage = ({ user, onLogout, onHome }) => {
         .item-name {
           flex: 1;
           color: var(--text);
+        }
+
+        .item-category-tag {
+          font-size: 0.8rem;
+          color: var(--text-muted);
+          font-weight: 600;
+          margin-left: 6px;
         }
 
         .item-price {

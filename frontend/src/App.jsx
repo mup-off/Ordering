@@ -7,6 +7,7 @@ import { ContactPage } from './pages/ContactPage'
 import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
 import { CartDrawer } from './components/CartDrawer'
+import { authApi, userApi, orderApi, menuApi } from './api'
 
 function App() {
     const [currentPage, setCurrentPage] = useState('menu')
@@ -15,15 +16,37 @@ function App() {
     const [lastOrderDetails, setLastOrderDetails] = useState(null)
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [restaurants, setRestaurants] = useState([])
 
+    // On mount: restore session from localStorage
     useEffect(() => {
-        // Simple loading simulation
-        const timer = setTimeout(() => setLoading(false), 500)
-        return () => clearTimeout(timer)
+        const token = localStorage.getItem('access_token')
+        if (token) {
+            userApi.getMe()
+                .then(data => setUser(data))
+                .catch(() => {
+                    // Token expired or invalid
+                    authApi.logout()
+                })
+                .finally(() => setLoading(false))
+        } else {
+            setLoading(false)
+        }
+
+        // Pre-load restaurants for order placement
+        menuApi.getRestaurants()
+            .then(data => setRestaurants(data))
+            .catch(() => {})
     }, [])
 
     const addToCart = (meal) => {
-        setCartItems([...cartItems, meal])
+        setCartItems(prev => {
+            const existing = prev.find(i => i.id === meal.id)
+            if (existing) {
+                return prev.map(i => i.id === meal.id ? { ...i, quantity: (i.quantity || 1) + 1 } : i)
+            }
+            return [...prev, { ...meal, quantity: 1 }]
+        })
         setIsCartOpen(true)
     }
 
@@ -34,32 +57,75 @@ function App() {
     }
 
     const handleCheckout = () => {
+        if (!user) {
+            setIsCartOpen(false)
+            setCurrentPage('login')
+            return
+        }
         setIsCartOpen(false)
         setCurrentPage('checkout')
         window.scrollTo(0, 0)
     }
 
-    const handlePlaceOrder = (details) => {
-        setLastOrderDetails({ ...details, orderId: Math.floor(Math.random() * 100000) })
+    const handlePlaceOrder = async (formData) => {
+        // Determine restaurant — use the first item's restaurant_id, or first available
+        const restaurantId = cartItems[0]?.restaurant?.id || (restaurants[0]?.id)
+
+        const items = cartItems.map(item => ({
+            meal_id: item.id,
+            quantity: item.quantity || 1,
+        }))
+
+        try {
+            const order = await orderApi.placeOrder({
+                restaurant_id: restaurantId,
+                items,
+            })
+            setLastOrderDetails({
+                ...formData,
+                orderId: order.id,
+                total: order.total_price,
+                items: order.items,
+            })
+        } catch {
+            // Fallback: show confirmation with local data if API fails
+            setLastOrderDetails({ ...formData, orderId: Math.floor(Math.random() * 100000) })
+        }
+
         setCurrentPage('confirmation')
         setCartItems([])
         window.scrollTo(0, 0)
     }
 
-    const handleLogin = (data) => {
-        setUser({ name: 'User', email: data.email })
+    const handleLogin = async (data) => {
+        // After authApi.login stores tokens, fetch real user info
+        try {
+            const me = await userApi.getMe()
+            setUser(me)
+        } catch {
+            setUser({ username: 'User' })
+        }
         setCurrentPage('menu')
     }
 
-    const handleSignup = (data) => {
-        setUser({ name: data.name, email: data.email })
+    const handleSignup = async (data) => {
+        // authApi.register + authApi.login already ran in SignupPage
+        try {
+            const me = await userApi.getMe()
+            setUser(me)
+        } catch {
+            setUser({ username: data.name || 'User' })
+        }
         setCurrentPage('menu')
     }
 
     const handleLogout = () => {
+        authApi.logout()
         setUser(null)
         setCurrentPage('menu')
     }
+
+    const cartCount = cartItems.reduce((total, item) => total + (item.quantity || 1), 0)
 
     if (loading) return <div className="loading-screen">Loading...</div>
 
@@ -69,6 +135,8 @@ function App() {
             currentPage={currentPage}
             user={user}
             onLogout={handleLogout}
+            cartCount={cartCount}
+            onCartClick={() => setIsCartOpen(true)}
         >
             <div className="app-container">
                 {currentPage === 'menu' && (
@@ -78,6 +146,7 @@ function App() {
                 {currentPage === 'checkout' && (
                     <CheckoutPage
                         cartItems={cartItems}
+                        user={user}
                         onBack={() => setCurrentPage('menu')}
                         onPlaceOrder={handlePlaceOrder}
                     />
@@ -98,6 +167,7 @@ function App() {
                     <LoginPage
                         onLogin={handleLogin}
                         onNavigateToSignup={() => setCurrentPage('signup')}
+                        onHome={() => setCurrentPage('menu')}
                     />
                 )}
 
@@ -105,6 +175,7 @@ function App() {
                     <SignupPage
                         onSignup={handleSignup}
                         onNavigateToLogin={() => setCurrentPage('login')}
+                        onHome={() => setCurrentPage('menu')}
                     />
                 )}
 

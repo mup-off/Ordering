@@ -50,11 +50,17 @@ export const authApi = {
   },
 }
 
+// User API
+export const userApi = {
+  getMe: () => request('/me/'),
+}
+
 // Menu / Meals API
 export const menuApi = {
   getMeals: () => request('/meals/'),
   getRestaurants: () => request('/restaurants/'),
 }
+
 
 // Orders API
 export const orderApi = {

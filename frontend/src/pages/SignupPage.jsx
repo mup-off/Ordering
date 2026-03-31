@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { User, Mail, Lock, Phone, ArrowRight, Github } from 'lucide-react'
+import { User, Mail, Lock, Phone, ArrowRight, Github, X } from 'lucide-react'
 
 import { authApi } from '../api'
 
-export const SignupPage = ({ onSignup, onNavigateToLogin }) => {
+export const SignupPage = ({ onSignup, onNavigateToLogin, onHome }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [formData, setFormData] = useState({
@@ -54,6 +54,9 @@ export const SignupPage = ({ onSignup, onNavigateToLogin }) => {
 
         <div className="signup-form-side">
           <div className="form-container">
+            <button className="close-btn" onClick={onHome} aria-label="Close">
+              <X size={24} />
+            </button>
             <div className="signup-header">
               <h2>Create New Account</h2>
               <p>Fill in the details below to get started</p>
@@ -212,6 +215,25 @@ export const SignupPage = ({ onSignup, onNavigateToLogin }) => {
         .form-container {
           width: 100%;
           max-width: 450px;
+          position: relative;
+        }
+
+        .close-btn {
+          position: absolute;
+          top: -2rem;
+          right: -1rem;
+          background: none;
+          color: var(--text-muted);
+          border-radius: 50%;
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .close-btn:hover {
+          background: white;
+          color: var(--text);
         }
 
         .signup-header {

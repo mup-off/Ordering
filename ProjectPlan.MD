@@ -30,7 +30,7 @@ Cross-Browser Testing: Verify the desktop layout looks stunning on Chrome, Safar
 Performance Optimization: Ensure the high-quality food images are compressed for fast loading.
 Phase 5: Launch & Post-Launch
 Deployment: Host the website on a cloud platform (e.g., Vercel, AWS, or Netlify).
-R
 
-eal-time Tracking (Future): Implement the "Track Your Order" live map feature suggested in our flow.
+
+Real-time Tracking (Future): Implement the "Track Your Order" live map feature suggested in our flow.
 Feedback Loop: Monitor the "Order Confirmation" page for user drop-offs.

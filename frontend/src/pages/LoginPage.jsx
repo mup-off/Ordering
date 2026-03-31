@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Github } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Github, X } from 'lucide-react'
 
 import { authApi } from '../api'
 
-export const LoginPage = ({ onLogin, onNavigateToSignup }) => {
+export const LoginPage = ({ onLogin, onNavigateToSignup, onHome }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
@@ -29,6 +29,9 @@ export const LoginPage = ({ onLogin, onNavigateToSignup }) => {
 
       <div className="login-card-container">
         <div className="login-card card glass">
+          <button className="close-btn" onClick={onHome} aria-label="Close">
+            <X size={24} />
+          </button>
           <div className="login-header">
             <h2>Welcome Back</h2>
             <p>Log in to order your favorite meals</p>
@@ -144,6 +147,25 @@ export const LoginPage = ({ onLogin, onNavigateToSignup }) => {
   padding: 3rem 2.5rem;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
+  position: relative;
+}
+
+        .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  color: var(--text-muted);
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+        .close-btn:hover {
+  background: var(--surface);
+  color: var(--text);
 }
 
         .login-header {

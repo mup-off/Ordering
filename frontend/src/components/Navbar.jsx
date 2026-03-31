@@ -1,7 +1,7 @@
 import React from 'react'
 import { Utensils, ShoppingCart, User, LogOut } from 'lucide-react'
 
-export const Navbar = ({ onPageChange, currentPage, user, onLogout }) => {
+export const Navbar = ({ onPageChange, currentPage, user, onLogout, cartCount = 0, onCartClick }) => {
   return (
     <nav className="navbar glass">
       <div className="nav-brand" onClick={() => onPageChange('menu')}>
@@ -39,9 +39,9 @@ export const Navbar = ({ onPageChange, currentPage, user, onLogout }) => {
           </div>
         )}
 
-        <button className="icon-btn cart-toggle">
+        <button className="icon-btn cart-toggle" onClick={onCartClick}>
           <ShoppingCart size={24} />
-          <span className="badge">0</span>
+          {cartCount > 0 && <span className="badge">{cartCount}</span>}
         </button>
       </div>
 

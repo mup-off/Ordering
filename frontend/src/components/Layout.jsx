@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar } from './Navbar'
 
-export const Layout = ({ children, onPageChange, currentPage, user, onLogout }) => {
+export const Layout = ({ children, onPageChange, currentPage, user, onLogout, cartCount, onCartClick }) => {
   return (
     <div className="layout-container">
       <Navbar
@@ -9,6 +9,8 @@ export const Layout = ({ children, onPageChange, currentPage, user, onLogout }) 
         currentPage={currentPage}
         user={user}
         onLogout={onLogout}
+        cartCount={cartCount}
+        onCartClick={onCartClick}
       />
       <main className="main-content">
         {children}

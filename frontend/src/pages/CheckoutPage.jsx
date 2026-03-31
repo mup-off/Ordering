@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MapPin, Phone, CreditCard, ChevronRight } from 'lucide-react'
+import { MapPin, Phone, CreditCard, ChevronRight, User } from 'lucide-react'
 
 export const CheckoutPage = ({ cartItems, onPlaceOrder, onBack }) => {
     const [formData, setFormData] = useState({

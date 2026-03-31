@@ -8,6 +8,18 @@ from .serializers import (
     MealSerializer, OrderSerializer, ContactMessageSerializer
 )
 
+class MeView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+        })
+
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
 

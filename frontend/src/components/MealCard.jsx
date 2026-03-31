@@ -1,8 +1,9 @@
 import React from 'react'
 import { Plus } from 'lucide-react'
 
-export const MealCard = ({ meal, onAdd }) => {
-    const imageUrl = meal.image ? (meal.image.startsWith('http') ? meal.image : `http://127.0.0.1:8000${meal.image}`) : '/images/placeholder_food.png'
+export const MealCard = ({ meal, onAdd, getImage }) => {
+    const imageUrl = getImage ? getImage(meal) : (meal.image ? (meal.image.startsWith('http') ? meal.image : `http://127.0.0.1:8000${meal.image}`) : '/images/placeholder_food.png')
+    const categoryName = typeof meal.category === 'object' ? meal.category?.name : meal.category
 
     return (
         <div className="meal-card card animate-in">
@@ -27,7 +28,7 @@ export const MealCard = ({ meal, onAdd }) => {
                 </div>
                 <p className="meal-description">{meal.description}</p>
                 <div className="meal-footer">
-                    <span className="meal-category">{meal.category}</span>
+                    <span className="meal-category">{categoryName}</span>
                     <div className="meal-rating">
                         ⭐ 4.8 (120+)
                     </div>

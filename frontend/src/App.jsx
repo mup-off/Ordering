@@ -6,6 +6,7 @@ import { ConfirmationPage } from './pages/ConfirmationPage'
 import { ContactPage } from './pages/ContactPage'
 import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
+import { ProfilePage } from './pages/ProfilePage'
 import { CartDrawer } from './components/CartDrawer'
 import { authApi, userApi, orderApi, menuApi } from './api'
 
@@ -175,6 +176,14 @@ function App() {
                     <SignupPage
                         onSignup={handleSignup}
                         onNavigateToLogin={() => setCurrentPage('login')}
+                        onHome={() => setCurrentPage('menu')}
+                    />
+                )}
+
+                {currentPage === 'profile' && (
+                    <ProfilePage
+                        user={user}
+                        onLogout={handleLogout}
                         onHome={() => setCurrentPage('menu')}
                     />
                 )}

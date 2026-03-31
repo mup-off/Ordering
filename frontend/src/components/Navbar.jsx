@@ -27,7 +27,10 @@ export const Navbar = ({ onPageChange, currentPage, user, onLogout, cartCount = 
       <div className="nav-actions">
         {user ? (
           <div className="user-profile">
-            <span className="user-name">Hi, {user.name}</span>
+            <button className="user-name-btn" onClick={() => onPageChange('profile')} title="View Profile">
+              <User size={18} />
+              <span className="user-name">Hi, {user.first_name || user.username || 'User'}</span>
+            </button>
             <button className="icon-btn" onClick={onLogout} title="Logout">
               <LogOut size={20} />
             </button>
@@ -118,7 +121,23 @@ export const Navbar = ({ onPageChange, currentPage, user, onLogout, cartCount = 
           align-items: center;
           gap: 1rem;
         }
-        .user-name { font-weight: 700; color: var(--text); }
+        .user-name-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: rgba(255, 77, 0, 0.05);
+          border: 1px solid rgba(255, 77, 0, 0.2);
+          padding: 6px 14px;
+          border-radius: 20px;
+          color: var(--primary);
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .user-name-btn:hover {
+          background: rgba(255, 77, 0, 0.15);
+        }
+        .user-name { font-weight: 700; color: var(--primary); }
 
         .icon-btn {
           background: none;

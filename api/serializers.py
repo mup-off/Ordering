@@ -54,6 +54,11 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'restaurant', 'restaurant_id', 'status', 'total_price', 'created_at', 'items')
         read_only_fields = ('user', 'status', 'total_price', 'created_at')
 
+    def validate_items(self, value):
+        if not value:
+            raise serializers.ValidationError("Order must contain at least one item.")
+        return value
+
     def create(self, validated_data):
         items_data = validated_data.pop('items')
         restaurant = validated_data.pop('restaurant')

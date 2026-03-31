@@ -18,6 +18,10 @@ export const CheckoutPage = ({ cartItems, onPlaceOrder, onBack }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (cartItems.length === 0) {
+            alert('Your cart is empty. Please add items before placing an order.')
+            return
+        }
         // Simple validation
         if (formData.phone.length < 10) {
             alert('Please enter a valid phone number')
@@ -102,7 +106,7 @@ export const CheckoutPage = ({ cartItems, onPlaceOrder, onBack }) => {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn-primary submit-btn">
+                        <button type="submit" className="btn-primary submit-btn" disabled={cartItems.length === 0}>
                             Place Order <ChevronRight size={20} />
                         </button>
                     </form>

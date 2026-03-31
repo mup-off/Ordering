@@ -12,6 +12,12 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('user__username',)
     exclude = ('restaurant',)
     inlines = [OrderItemInline]
+    actions = ['approve_orders']
+
+    @admin.action(description='Approve selected orders (mark as Accepted)')
+    def approve_orders(self, request, queryset):
+        updated = queryset.update(status='Accepted')
+        self.message_user(request, f'Successfully approved {updated} order(s).')
 
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
